@@ -6,3 +6,7 @@ sealed class MainPageState {}
 final class MainPageInitial extends MainPageState {}
 
 class Indexstate extends MainPageState {}
+
+class AddvillaPageChangeState extends MainPageState {}
+
+class VillasChangeState extends MainPageState {}

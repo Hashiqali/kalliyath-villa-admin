@@ -29,7 +29,7 @@ Widget sidebar({
               child: istrue
                   ? Container(
                       decoration: BoxDecoration(
-                          color: const Color.fromARGB(185, 34, 163, 243),
+                          color:  const Color.fromARGB(244, 7, 22, 45),
                           borderRadius: BorderRadius.circular(8)),
                       height: height / 15,
                       width: width / 8,
