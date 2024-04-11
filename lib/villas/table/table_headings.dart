@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 
-
-
 class TableItems extends StatelessWidget {
   TableItems({super.key, required this.size});
   Size size;
@@ -29,7 +27,6 @@ class TableItems extends StatelessWidget {
                 splashColor: const Color.fromARGB(121, 129, 128, 128),
                 onTap: () {
                   addvilla(context, size);
-                  
                 },
                 child: Container(
                   height: size.height / 15,

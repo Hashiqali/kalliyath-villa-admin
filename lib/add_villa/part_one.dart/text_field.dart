@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
+import 'package:kalliyath_villa_admin/add_villa/functions.dart';
+import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
+import 'package:kalliyath_villa_admin/add_villa/part_one.dart/drop_down.dart';
 
+final TextEditingController villaNamecontroller = TextEditingController();
+final TextEditingController villaDescriptioncontroller =
+    TextEditingController();
+final TextEditingController villaPricecontroller = TextEditingController();
+final TextEditingController villaBhkcontroller = TextEditingController();
 
-class TextFormWidget extends StatelessWidget {
- const TextFormWidget({super.key, required this.size, required this.villa});
- final Size size;
-  final  AddvillaBloc villa;
+class TextFormWidget extends StatefulWidget {
+  const TextFormWidget(
+      {super.key,
+      required this.size,
+      required this.villa,
+      required this.formkey});
+  final Size size;
+  final AddvillaBloc villa;
+  final GlobalKey formkey;
+
+  @override
+  State<TextFormWidget> createState() => _TextFormWidgetState();
+}
+
+class _TextFormWidgetState extends State<TextFormWidget> {
+  AddvillaBloc acbloc = AddvillaBloc();
+  @override
+  void initState() {
+    acbloc.add(AcCheckboxcCick(istrue: false));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          controller: villaNamecontroller,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) {
             if (value!.isEmpty) {
@@ -31,10 +60,11 @@ class TextFormWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: size.height / 40),
+        SizedBox(height: widget.size.height / 40),
         SizedBox(
-          height: size.height / 5,
+          height: widget.size.height / 5,
           child: TextFormField(
+            controller: villaDescriptioncontroller,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               if (value!.isEmpty) {
@@ -59,7 +89,7 @@ class TextFormWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: size.height / 40),
+        SizedBox(height: widget.size.height / 40),
         const Padding(
           padding: EdgeInsets.only(bottom: 5),
           child: Text(
@@ -70,46 +100,98 @@ class TextFormWidget extends StatelessWidget {
                 fontSize: 12),
           ),
         ),
-        Row(
-          children: [
-            Material(
-              elevation: 3,
-              clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(255, 255, 255, 255),
-              child: InkWell(
-                  splashColor: const Color.fromARGB(52, 111, 111, 111),
-                  onTap: () {},
-                  child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                      height: size.height / 15,
-                      width: size.width / 15,
-                      child: const Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            size: 17,
-                            color: Color.fromARGB(255, 224, 136, 3),
-                          ),
-                          Text(
-                            'Choose',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontFamily: "Kalliyath",
-                                fontSize: 12),
-                          ),
-                        ],
-                      )))),
-            ),
-          ],
-        ),
-        SizedBox(height: size.height / 40),
         BlocBuilder<AddvillaBloc, AddvillaState>(
-          bloc: villa,
+          bloc: widget.villa,
+          builder: (context, state) {
+            if (state is LocationbuilderState) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Material(
+                    elevation: 3,
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    child: InkWell(
+                        splashColor: const Color.fromARGB(52, 111, 111, 111),
+                        onTap: () async {
+                          pickLocation(context, widget.villa);
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8)),
+                            height: widget.size.height / 15,
+                            width: widget.size.width / 15,
+                            child: const Center(
+                                child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.done,
+                                  size: 17,
+                                  color: Color.fromARGB(255, 36, 224, 3),
+                                ),
+                                Text(
+                                  'Done',
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                      fontFamily: "Kalliyath",
+                                      fontSize: 12),
+                                ),
+                              ],
+                            )))),
+                  ),
+                  dropdownWidget(size: widget.size)
+                ],
+              );
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Material(
+                  elevation: 3,
+                  clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  child: InkWell(
+                      splashColor: const Color.fromARGB(52, 111, 111, 111),
+                      onTap: () async {
+                        pickLocation(context, widget.villa);
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8)),
+                          height: widget.size.height / 15,
+                          width: widget.size.width / 15,
+                          child: const Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: 17,
+                                color: Color.fromARGB(255, 224, 136, 3),
+                              ),
+                              Text(
+                                'Choose',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                    fontFamily: "Kalliyath",
+                                    fontSize: 12),
+                              ),
+                            ],
+                          )))),
+                ),
+                dropdownWidget(size: widget.size)
+              ],
+            );
+          },
+        ),
+        SizedBox(height: widget.size.height / 40),
+        BlocBuilder<AddvillaBloc, AddvillaState>(
+          bloc: acbloc,
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
@@ -136,11 +218,12 @@ class TextFormWidget extends StatelessWidget {
                         fillColor: const MaterialStatePropertyAll(Colors.black),
                         value: istrue == true,
                         onChanged: (value) {
-                          villa.add(AcCheckboxcCick(istrue: true));
+                          ac = value!;
+                          acbloc.add(AcCheckboxcCick(istrue: true));
                         }),
                   ],
                 ),
-                SizedBox(width: size.height / 20),
+                SizedBox(width: widget.size.height / 20),
                 Row(
                   children: [
                     const Padding(
@@ -158,7 +241,7 @@ class TextFormWidget extends StatelessWidget {
                         fillColor: const MaterialStatePropertyAll(Colors.black),
                         value: istrue == false,
                         onChanged: (value) {
-                          villa.add(AcCheckboxcCick(istrue: false));
+                          acbloc.add(AcCheckboxcCick(istrue: false));
                         }),
                   ],
                 )
@@ -166,12 +249,13 @@ class TextFormWidget extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: size.height / 40),
+        SizedBox(height: widget.size.height / 40),
         Row(
           children: [
             SizedBox(
-              width: size.width / 7,
+              width: widget.size.width / 7,
               child: TextFormField(
+                controller: villaPricecontroller,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -202,10 +286,11 @@ class TextFormWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: size.height / 40),
+            SizedBox(width: widget.size.height / 40),
             SizedBox(
-              width: size.width / 7,
+              width: widget.size.width / 7,
               child: TextFormField(
+                controller: villaBhkcontroller,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value!.isEmpty) {

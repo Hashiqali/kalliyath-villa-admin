@@ -2,7 +2,7 @@ import 'package:adaptive_navigation_widget/adaptive_navigation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/main_page/bloc/main_page_bloc.dart';
 
-MainPageBloc bloc1 = MainPageBloc();
+MainPageBloc sidebarindex = MainPageBloc();
 Widget sidebar({
   required height,
   required width,
@@ -29,7 +29,7 @@ Widget sidebar({
               child: istrue
                   ? Container(
                       decoration: BoxDecoration(
-                          color:  const Color.fromARGB(244, 7, 22, 45),
+                          color: const Color.fromARGB(244, 7, 22, 45),
                           borderRadius: BorderRadius.circular(8)),
                       height: height / 15,
                       width: width / 8,
@@ -111,5 +111,13 @@ final List<AdaptiveDestination> destinations = [
         Icon(Icons.currency_rupee, color: Color.fromARGB(255, 255, 255, 255)),
     label: 'Revenue',
     tooltip: 'Revenue',
+  ),
+  const AdaptiveDestination(
+    initialPath: "/Categories",
+    icon: Icon(Icons.holiday_village_outlined, color: Colors.black),
+    selectedIcon:
+        Icon(Icons.holiday_village, color: Color.fromARGB(255, 255, 255, 255)),
+    label: 'Categories',
+    tooltip: 'Categories',
   ),
 ];

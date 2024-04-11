@@ -10,3 +10,12 @@ class AcCheckboxcCick extends AddvillaEvent {
 }
 
 class AdvillaInitial extends AddvillaEvent{}
+
+class Photobuilder extends AddvillaEvent{}
+
+class Dropdownbuilder extends AddvillaEvent{}
+
+class Lodingbuilder extends AddvillaEvent{}
+class Locationbuilder extends AddvillaEvent{}
+
+

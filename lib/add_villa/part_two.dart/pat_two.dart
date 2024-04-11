@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
+import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_two.dart/check_box.dart';
 
 class PartTwo extends StatelessWidget {
-  const PartTwo({super.key, required this.size, required this.villa});
+  const PartTwo({
+    super.key,
+    required this.size,
+    required this.villa,
+  });
   final Size size;
   final AddvillaBloc villa;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -35,7 +42,9 @@ class PartTwo extends StatelessWidget {
               color: const Color.fromARGB(255, 255, 255, 255),
               child: InkWell(
                   splashColor: const Color.fromARGB(52, 111, 111, 111),
-                  onTap: () {},
+                  onTap: () async {
+                    filepicker(villa, context);
+                  },
                   child: Container(
                       decoration:
                           BoxDecoration(borderRadius: BorderRadius.circular(8)),
@@ -61,29 +70,65 @@ class PartTwo extends StatelessWidget {
                         ],
                       )))),
             ),
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 3,
+                top: 10,
+              ),
+              child: Text(
+                'Minimum 4 images required',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontFamily: "Kalliyath",
+                    fontSize: 10),
+              ),
+            ),
             SizedBox(height: size.height / 40),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 30,
-                  mainAxisSpacing: 30,
-                ),
-                itemCount: 40,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 164, 164, 163),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Center(
-                      child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.close,
-                            size: 30,
-                          )),
-                    ),
-                  );
+              child: BlocBuilder<AddvillaBloc, AddvillaState>(
+                bloc: villa,
+                builder: (context, state) {
+                  if (state is photobuilderstate) {
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.1,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30,
+                      ),
+                      itemCount: imagesList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final data = imagesList[index];
+
+                        return Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover, image: MemoryImage(data)),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.white,
+                              child: Center(
+                                child: IconButton(
+                                    onPressed: () {
+                                      imagesList.removeAt(index);
+                                      villa.add(Photobuilder());
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      size: 20,
+                                    )),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                  return Container();
                 },
               ),
             ),

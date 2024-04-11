@@ -10,3 +10,7 @@ class Indexstate extends MainPageState {}
 class AddvillaPageChangeState extends MainPageState {}
 
 class VillasChangeState extends MainPageState {}
+class CategoriesBuildState extends MainPageState {}
+
+class LoadingCircularState extends MainPageState {}
+class LoadingCircularStopState extends MainPageState {}

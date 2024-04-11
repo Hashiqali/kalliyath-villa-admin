@@ -6,3 +6,7 @@ sealed class MainPageEvent {}
 class Indexchange extends MainPageEvent {}
 
 class AddvillaPageChange extends MainPageEvent {}
+
+class CategoriesBuild extends MainPageEvent {}
+
+class LoadingCircular extends MainPageEvent {}

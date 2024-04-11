@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/bookings/bookings.dart';
+import 'package:kalliyath_villa_admin/categories/categories.dart';
 import 'package:kalliyath_villa_admin/dash_board/dash_board.dart';
 import 'package:kalliyath_villa_admin/login_page/login_page.dart';
 import 'package:kalliyath_villa_admin/main_page/bloc/main_page_bloc.dart';
@@ -11,16 +12,19 @@ import 'package:kalliyath_villa_admin/users/user.dart';
 import 'package:kalliyath_villa_admin/villas/villas.dart';
 import 'package:kalliyath_villa_admin/widgets/sidebar.dart';
 
+int indexx = 0;
+int currentidx = 0;
+
 // ignore: must_be_immutable
 class SideTile extends StatelessWidget {
   SideTile({super.key, required this.size});
 
   Size size;
-  int indexx = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MainPageBloc, MainPageState>(
-      bloc: bloc1,
+      bloc: sidebarindex,
       builder: (context, state) {
         if (state is Indexstate) {
           return AdaptiveNavigation(
@@ -39,13 +43,15 @@ class SideTile extends StatelessWidget {
                                   itemCount: destinations.length,
                                   itemBuilder: ((context, index) {
                                     final data = destinations[index];
+
                                     return sidebar(
                                         icon2: data.selectedIcon,
-                                        istrue: index == currentIndex,
+                                        istrue: index == currentidx,
                                         ontap: () {
-                                          onDestinationSelected(index);
+                                          currentidx = index;
+                                          onDestinationSelected(currentidx);
                                           indexx = index;
-                                          bloc1.add(Indexchange());
+                                          sidebarindex.add(Indexchange());
                                         },
                                         height: size.height / 10,
                                         width: size.width / 2,
@@ -76,12 +82,13 @@ class SideTile extends StatelessWidget {
                         flex: 5,
                         child: IndexedStack(
                           index: indexx,
-                          children: const [
-                            DashBoardPage(),
-                            VillasPage(),
-                            BookingPage(),
-                            UserPage(),
-                            RevenuePage()
+                          children: [
+                            const DashBoardPage(),
+                            const VillasPage(),
+                            const BookingPage(),
+                            const UserPage(),
+                            const RevenuePage(),
+                            Categoriespage(),
                           ],
                         ))
                   ],
@@ -119,16 +126,18 @@ class SideTile extends StatelessWidget {
             },
             onDestinationChanged: (context, location, index) {
               indexx = index;
-              bloc1.add(Indexchange());
+              sidebarindex.add(Indexchange());
             },
-            extendedRailNavigationOverflow: 5,
+            extendedRailNavigationOverflow: 6,
             child: IndexedStack(
               index: indexx,
-              children: const [
-                DashBoardPage(),
-                VillasPage(),
-                UserPage(),
-                RevenuePage()
+              children: [
+                const DashBoardPage(),
+                const VillasPage(),
+                const BookingPage(),
+                const UserPage(),
+                const RevenuePage(),
+                Categoriespage(),
               ],
             ),
           );
