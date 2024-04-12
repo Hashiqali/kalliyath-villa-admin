@@ -5,8 +5,8 @@ import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart
 import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
 
 AddvillaBloc dropdownupdate = AddvillaBloc();
+String? selectedVilla;
 dropdownWidget({required Size size}) {
-  String? selectedVilla;
   return Padding(
     padding: const EdgeInsets.only(right: 150),
     child: BlocBuilder<AddvillaBloc, AddvillaState>(
@@ -41,7 +41,7 @@ dropdownWidget({required Size size}) {
               ),
               onChanged: (String? newValue) {
                 selectedVilla = newValue;
-                type = newValue!;
+                type = selectedVilla!;
                 dropdownupdate.add(Dropdownbuilder());
               },
               items: getdropdownvalues()

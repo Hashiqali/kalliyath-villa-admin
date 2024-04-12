@@ -4,7 +4,7 @@ import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
 import 'package:kalliyath_villa_admin/widgets/checkbox_widget.dart';
 
-checkBox({required AddvillaBloc villa}) {
+checkBox() {
   AddvillaBloc blc = AddvillaBloc();
   AddvillaBloc blc1 = AddvillaBloc();
   AddvillaBloc blc2 = AddvillaBloc();

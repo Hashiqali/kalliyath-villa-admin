@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_headings.dart';
-
 
 class VillasPage extends StatefulWidget {
   const VillasPage({super.key});
@@ -13,9 +13,9 @@ class VillasPage extends StatefulWidget {
 class _VillasPageState extends State<VillasPage> {
   @override
   void initState() {
+    detailsbloc.add(Detailsbuilder());
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

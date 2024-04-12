@@ -5,8 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
+import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
 List<Uint8List> imagesList = [];
+List imagesListupload = [];
+
 Future<void> filepicker(AddvillaBloc villa, context) async {
   try {
     final img1 = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -41,9 +44,12 @@ Future<void> filepicker(AddvillaBloc villa, context) async {
 
       if (croppedFile != null) {
         final bytes = await croppedFile.readAsBytes();
-
+        detailsbloc.add(Lodingbuilder());
         imagesList.add(bytes);
+        final data = await addimageTofirebase(bytes);
+        imagesListupload.add(data);
         villa.add(Photobuilder());
+        detailsbloc.add(Lodingbuilder());
       }
     }
   } catch (e) {
@@ -74,23 +80,14 @@ Future<String> addimageTofirebase(Uint8List? result) async {
   return imageUrl;
 }
 
-// addimageTofirebase(Uint8List? result) async {
-//   String imageUrl = '';
-//   if (result != null) {
-//     final bytes = result;
+firebaseimagedelete(List paths) async {
+  for (String i in paths) {
+    final reference = FirebaseStorage.instance.ref().child(i);
+    await reference.delete();
+  }
+}
 
-//     try {
-   
-//       final fileName = 'image-${DateTime.now().millisecondsSinceEpoch}_$result';
-//       final referenceRoot = FirebaseStorage.instance.ref();
-//       final referenceDireFiles = referenceRoot.child('files');
-//       final referenceFileToUpload = referenceDireFiles.child(fileName);
-//       final metadata = SettableMetadata(contentType: 'image/jpeg');
-//       await referenceFileToUpload.putData(bytes, metadata);
-//       imageUrl = await referenceFileToUpload.getDownloadURL();
-//       print('File uploaded successfully. Download URL: $imageUrl');
-//     } catch (error) {
-//       log('Error uploading file: ${error.toString()}');
-//     }
-//   }
-// }
+firebaseimagedeletesingle(path) async {
+  final reference = FirebaseStorage.instance.ref().child(path);
+  await reference.delete();
+}

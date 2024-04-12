@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 
 class TableItems extends StatelessWidget {
-  TableItems({super.key, required this.size});
-  Size size;
+  const TableItems({super.key, required this.size});
+  final Size size;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +26,7 @@ class TableItems extends StatelessWidget {
               child: InkWell(
                 splashColor: const Color.fromARGB(121, 129, 128, 128),
                 onTap: () {
-                  addvilla(context, size);
+                  addvilla(context, size, {}, false);
                 },
                 child: Container(
                   height: size.height / 15,
@@ -60,70 +60,122 @@ class TableItems extends StatelessWidget {
           decoration: BoxDecoration(
               color: const Color.fromARGB(244, 7, 22, 45),
               borderRadius: BorderRadius.circular(10)),
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Image',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 52, right: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: size.height / 15,
+                        width: size.width / 25,
+                        child: const Center(
+                          child: Text(
+                            'Image',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 15,
+                        width: size.width / 12,
+                        child: const Center(
+                          child: Text(
+                            'Name',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 15,
+                        width: size.width / 12,
+                        child: const Center(
+                          child: Text(
+                            'Type',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 15,
+                        width: size.width / 15,
+                        child: const Center(
+                          child: Text(
+                            'Price',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 20,
+                        width: size.width / 20,
+                        child: const Center(
+                          child: Text(
+                            'Details',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 15,
+                        width: size.width / 12,
+                        child: const Center(
+                          child: Text(
+                            'Status',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 20,
+                        width: size.width / 20,
+                        child: const Center(
+                          child: Text(
+                            'Edit',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height / 20,
+                        width: size.width / 20,
+                        child: const Center(
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                fontFamily: "Kalliyath",
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Name',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'Type',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'Price',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'View Details',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'Status',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'Edit',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                  Text(
-                    'Delete',
-                    style: TextStyle(
-                        color: Color.fromARGB(255, 255, 255, 255),
-                        fontFamily: "Kalliyath",
-                        fontSize: 16),
-                  ),
-                ],
+                ),
               ),
             ],
           ),

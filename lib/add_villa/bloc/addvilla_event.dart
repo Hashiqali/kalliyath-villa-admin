@@ -9,13 +9,17 @@ class AcCheckboxcCick extends AddvillaEvent {
   AcCheckboxcCick({required this.istrue});
 }
 
-class AdvillaInitial extends AddvillaEvent{}
+class AdvillaInitial extends AddvillaEvent {}
 
-class Photobuilder extends AddvillaEvent{}
+class Photobuilder extends AddvillaEvent {}
 
-class Dropdownbuilder extends AddvillaEvent{}
+class Dropdownbuilder extends AddvillaEvent {}
 
-class Lodingbuilder extends AddvillaEvent{}
-class Locationbuilder extends AddvillaEvent{}
+class Lodingbuilder extends AddvillaEvent {}
 
+class Locationbuilder extends AddvillaEvent {}
+
+class Statusbuilder extends AddvillaEvent {}
+
+class Detailsbuilder extends AddvillaEvent {}
 

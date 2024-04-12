@@ -43,6 +43,7 @@ pickLocation(BuildContext context, AddvillaBloc villa) {
                       fontSize: 12),
                   onPicked: (pickedData) {
                     location = (pickedData.latLong.latitude).toString();
+                    locationaddress = pickedData.address;
                     villa.add(Locationbuilder());
                     print({'address= ${pickedData.address}'});
                     Navigator.pop(context);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
@@ -11,26 +13,31 @@ final TextEditingController villaDescriptioncontroller =
     TextEditingController();
 final TextEditingController villaPricecontroller = TextEditingController();
 final TextEditingController villaBhkcontroller = TextEditingController();
+AddvillaBloc acbloc = AddvillaBloc();
 
 class TextFormWidget extends StatefulWidget {
   const TextFormWidget(
       {super.key,
       required this.size,
       required this.villa,
-      required this.formkey});
+      required this.formkey,
+      required this.edit});
   final Size size;
   final AddvillaBloc villa;
   final GlobalKey formkey;
+  final bool edit;
 
   @override
   State<TextFormWidget> createState() => _TextFormWidgetState();
 }
 
 class _TextFormWidgetState extends State<TextFormWidget> {
-  AddvillaBloc acbloc = AddvillaBloc();
   @override
   void initState() {
-    acbloc.add(AcCheckboxcCick(istrue: false));
+    if (!widget.edit) {
+      acbloc.add(AcCheckboxcCick(istrue: false));
+    }
+
     super.initState();
   }
 
@@ -104,6 +111,7 @@ class _TextFormWidgetState extends State<TextFormWidget> {
           bloc: widget.villa,
           builder: (context, state) {
             if (state is LocationbuilderState) {
+              print('location rebuilded');
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -193,7 +201,7 @@ class _TextFormWidgetState extends State<TextFormWidget> {
         BlocBuilder<AddvillaBloc, AddvillaState>(
           bloc: acbloc,
           builder: (context, state) {
-            bool istrue = false;
+            bool istrue = acistrue;
             if (state is AcCheckboxcCickedstate) {
               istrue = true;
             } else if (state is AcCheckboxcCickstate) {
@@ -256,6 +264,9 @@ class _TextFormWidgetState extends State<TextFormWidget> {
               width: widget.size.width / 7,
               child: TextFormField(
                 controller: villaPricecontroller,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*$')),
+                ],
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -290,6 +301,9 @@ class _TextFormWidgetState extends State<TextFormWidget> {
             SizedBox(
               width: widget.size.width / 7,
               child: TextFormField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*$')),
+                ],
                 controller: villaBhkcontroller,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {

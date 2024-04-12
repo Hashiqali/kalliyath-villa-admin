@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
+import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
 import 'package:meta/meta.dart';
 
 part 'addvilla_event.dart';
@@ -14,6 +16,8 @@ class AddvillaBloc extends Bloc<AddvillaEvent, AddvillaState> {
     on<Dropdownbuilder>(dropdownbuilder);
     on<Lodingbuilder>(lodingbuilder);
     on<Locationbuilder>(locationbuilder);
+    on<Statusbuilder>(statusbuilder);
+    on<Detailsbuilder>(detailsbuilder);
   }
 
   FutureOr<void> acCheckboxcCick(
@@ -31,7 +35,7 @@ class AddvillaBloc extends Bloc<AddvillaEvent, AddvillaState> {
   }
 
   FutureOr<void> photobuilder(Photobuilder event, Emitter<AddvillaState> emit) {
-    emit(photobuilderstate());
+    emit(Photobuilderstate());
   }
 
   FutureOr<void> dropdownbuilder(
@@ -53,5 +57,19 @@ class AddvillaBloc extends Bloc<AddvillaEvent, AddvillaState> {
     if (location != '') {
       emit(LocationbuilderState());
     }
+  }
+
+  FutureOr<void> statusbuilder(
+      Statusbuilder event, Emitter<AddvillaState> emit) {
+    emit(StatusbuilderState());
+  }
+
+  FutureOr<void> detailsbuilder(
+      Detailsbuilder event, Emitter<AddvillaState> emit) async {
+    emit(DetailsloadingState());
+
+    await getvillas();
+    await Future.delayed(const Duration(seconds: 3));
+    emit(DetailsbuilderState());
   }
 }

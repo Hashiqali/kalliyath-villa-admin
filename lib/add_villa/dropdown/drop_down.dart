@@ -10,11 +10,11 @@ Widget selectVillatype() {
     builder: (context, state) {
       if (state is Dropdownbuilderstate) {
         return SizedBox(
-          child: Container(
+          child: SizedBox(
             width: 200, // Adjust the width as needed
             child: DropdownButton<String>(
               value: selectedVilla, // Current selected villa option
-              hint: Text(
+              hint: const Text(
                   'Select a Villa'), // Hint text when no option is selected
               onChanged: (String? newValue) {
                 selectedVilla = newValue!; // Update selected villa option
@@ -40,15 +40,15 @@ Widget selectVillatype() {
           ),
         );
       }
-      return Container(
+      return SizedBox(
         width: 20,
-        height: 10, // Adjust the width as needed
+        height: 10,
         child: DropdownButton<String>(
-          value: selectedVilla, // Current selected villa option
-          hint: Text('Select a Villa'), // Hint text when no option is selected
+          value: selectedVilla,
+          hint: const Text('Select a Villa'),
           onChanged: (String? newValue) {
-            selectedVilla = newValue!; // Update selected villa option
-            bloc.add(Dropdownbuilder()); // Notify bloc about the change
+            selectedVilla = newValue!;
+            bloc.add(Dropdownbuilder());
           },
           items: <String>[
             'Beachfront Villa',
@@ -60,9 +60,8 @@ Widget selectVillatype() {
             return DropdownMenuItem<String>(
               value: value,
               child: SizedBox(
-                width:
-                    double.infinity, // Make each dropdown item fill the width
-                child: Text(value), // Display the villa option as text
+                width: double.infinity,
+                child: Text(value),
               ),
             );
           }).toList(),

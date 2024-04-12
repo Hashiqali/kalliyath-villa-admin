@@ -1,7 +1,6 @@
 import 'package:adaptive_navigation_widget/adaptive_navigation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/bookings/bookings.dart';
 import 'package:kalliyath_villa_admin/categories/categories.dart';
 import 'package:kalliyath_villa_admin/dash_board/dash_board.dart';
@@ -31,7 +30,7 @@ class SideTile extends StatelessWidget {
             permanentDrawerBuilder: (context, destinations, currentIndex,
                 onDestinationSelected, child) {
               return Container(
-                color: Color.fromARGB(104, 231, 229, 229),
+                color: const Color.fromARGB(104, 231, 229, 229),
                 child: Row(
                   children: [
                     Expanded(

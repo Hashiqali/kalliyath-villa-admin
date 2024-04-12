@@ -3,15 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_two.dart/check_box.dart';
+import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
 class PartTwo extends StatelessWidget {
-  const PartTwo({
+  PartTwo({
     super.key,
     required this.size,
     required this.villa,
   });
   final Size size;
   final AddvillaBloc villa;
+
+  final AddvillaBloc photo = AddvillaBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -33,42 +36,65 @@ class PartTwo extends StatelessWidget {
                 fontSize: 17,
               ),
             ),
-            checkBox(villa: villa),
+            checkBox(),
             SizedBox(height: size.height / 40),
             Material(
               elevation: 2,
               clipBehavior: Clip.hardEdge,
               borderRadius: BorderRadius.circular(10),
               color: const Color.fromARGB(255, 255, 255, 255),
-              child: InkWell(
-                  splashColor: const Color.fromARGB(52, 111, 111, 111),
-                  onTap: () async {
-                    filepicker(villa, context);
-                  },
-                  child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                      height: size.height / 15,
-                      width: size.width / 15,
-                      child: const Center(
-                          child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.add_photo_alternate_outlined,
-                            size: 19,
-                            color: Color.fromARGB(255, 17, 107, 204),
-                          ),
-                          Text(
-                            'Choose',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontFamily: "Kalliyath",
-                                fontSize: 12),
-                          ),
-                        ],
-                      )))),
+              child: BlocBuilder<AddvillaBloc, AddvillaState>(
+                bloc: detailsbloc,
+                builder: (context, state) {
+                  bool istrue = false;
+                  if (state is Lodingbuilderstate1) {
+                    istrue = true;
+                  } else if (state is Lodingbuilderstate2) {
+                    istrue = false;
+                  }
+                  return InkWell(
+                      splashColor: const Color.fromARGB(52, 111, 111, 111),
+                      onTap: () async {
+                        if (!istrue) {
+                          filepicker(photo, context);
+                        }
+                      },
+                      child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8)),
+                          height: size.height / 15,
+                          width: size.width / 15,
+                          child: istrue
+                              ? Center(
+                                  child: SizedBox(
+                                    height: size.height / 30,
+                                    width: size.width / 60,
+                                    child: const CircularProgressIndicator(
+                                      color: Color.fromARGB(255, 0, 0, 0),
+                                    ),
+                                  ),
+                                )
+                              : const Center(
+                                  child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_photo_alternate_outlined,
+                                      size: 19,
+                                      color: Color.fromARGB(255, 17, 107, 204),
+                                    ),
+                                    Text(
+                                      'Choose',
+                                      style: TextStyle(
+                                          color: Color.fromARGB(255, 0, 0, 0),
+                                          fontFamily: "Kalliyath",
+                                          fontSize: 12),
+                                    ),
+                                  ],
+                                ))));
+                },
+              ),
             ),
             const Padding(
               padding: EdgeInsets.only(
@@ -86,9 +112,9 @@ class PartTwo extends StatelessWidget {
             SizedBox(height: size.height / 40),
             Expanded(
               child: BlocBuilder<AddvillaBloc, AddvillaState>(
-                bloc: villa,
+                bloc: photo,
                 builder: (context, state) {
-                  if (state is photobuilderstate) {
+                  if (state is Photobuilderstate) {
                     return GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -113,8 +139,11 @@ class PartTwo extends StatelessWidget {
                               backgroundColor: Colors.white,
                               child: Center(
                                 child: IconButton(
-                                    onPressed: () {
+                                    onPressed: () async {
                                       imagesList.removeAt(index);
+                                      await firebaseimagedeletesingle(
+                                          imagesListupload[index]);
+                                      imagesListupload.removeAt(index);
                                       villa.add(Photobuilder());
                                     },
                                     icon: const Icon(

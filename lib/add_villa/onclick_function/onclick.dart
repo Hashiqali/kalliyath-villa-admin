@@ -5,6 +5,7 @@ import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.d
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_one.dart/text_field.dart';
 import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
+import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 import 'package:kalliyath_villa_admin/widgets/snackbar.dart';
 
 final CollectionReference firedata =
@@ -20,15 +21,23 @@ formsubmit(GlobalKey<FormState> key, context, AddvillaBloc villa) async {
     } else if (type == '') {
       snackbarAlert(context, 'Please select villa type');
       return;
+    } else if (location == '') {
+      snackbarAlert(context, 'Please add location');
+    } else if (imagesList.isEmpty) {
+      snackbarAlert(context, 'Please add images');
     } else if (imagesList.length > 3) {
-      snackbarAlert(context, 'Please add atleast 4 images');
-    } else {
       villa.add(Lodingbuilder());
+
       final data = await getallvillasdetails();
       await firedata.add(data);
-      snackbarAlert(context, 'Success');
-      clearall();
+      villa.add(Lodingbuilder());
       Navigator.of(context).pop();
+      detailsbloc.add(Detailsbuilder());
+      snackbarAlert(context, 'Success');
+
+      clearall();
+    } else {
+      snackbarAlert(context, 'Please add atleast 4 images');
     }
   } else {
     snackbarAlert(context, 'Please fill the form');
