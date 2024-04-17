@@ -16,6 +16,7 @@ class AcCheckboxcCickstate extends AddvillaState {
 }
 
 class Photobuilderstate extends AddvillaState {}
+class Photobuildereditstate extends AddvillaState {}
 
 class Dropdownbuilderstate extends AddvillaState {}
 class Lodingbuilderstate1 extends AddvillaState{}

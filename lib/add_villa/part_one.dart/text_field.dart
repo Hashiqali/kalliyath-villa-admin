@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/functions.dart';
@@ -76,8 +75,8 @@ class _TextFormWidgetState extends State<TextFormWidget> {
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Please Enter Description';
-              } else if (value.split(' ').length < 10) {
-                return 'Description must contain at least 10 words';
+              } else if (value.length < 30) {
+                return 'Description must be atleast 30 characters long.';
               }
 
               return null;
@@ -203,9 +202,9 @@ class _TextFormWidgetState extends State<TextFormWidget> {
           builder: (context, state) {
             bool istrue = acistrue;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return Row(
               children: [
@@ -227,6 +226,7 @@ class _TextFormWidgetState extends State<TextFormWidget> {
                         value: istrue == true,
                         onChanged: (value) {
                           ac = value!;
+
                           acbloc.add(AcCheckboxcCick(istrue: true));
                         }),
                   ],
@@ -249,6 +249,8 @@ class _TextFormWidgetState extends State<TextFormWidget> {
                         fillColor: const MaterialStatePropertyAll(Colors.black),
                         value: istrue == false,
                         onChanged: (value) {
+                          ac = false;
+
                           acbloc.add(AcCheckboxcCick(istrue: false));
                         }),
                   ],

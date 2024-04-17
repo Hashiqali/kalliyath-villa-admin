@@ -84,7 +84,7 @@ class TableItems extends StatelessWidget {
                       ),
                       SizedBox(
                         height: size.height / 15,
-                        width: size.width / 12,
+                        width: size.width / 20,
                         child: const Center(
                           child: Text(
                             'Name',
@@ -97,7 +97,7 @@ class TableItems extends StatelessWidget {
                       ),
                       SizedBox(
                         height: size.height / 15,
-                        width: size.width / 12,
+                        width: size.width / 9,
                         child: const Center(
                           child: Text(
                             'Type',
@@ -108,29 +108,35 @@ class TableItems extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: size.height / 15,
-                        width: size.width / 15,
-                        child: const Center(
-                          child: Text(
-                            'Price',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25),
+                        child: SizedBox(
+                          height: size.height / 15,
+                          width: size.width / 40,
+                          child: const Center(
+                            child: Text(
+                              'Price',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontFamily: "Kalliyath",
+                                  fontSize: 16),
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: size.height / 20,
-                        width: size.width / 20,
-                        child: const Center(
-                          child: Text(
-                            'Details',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 50),
+                        child: SizedBox(
+                          height: size.height / 20,
+                          width: size.width / 20,
+                          child: const Center(
+                            child: Text(
+                              'Details',
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  fontFamily: "Kalliyath",
+                                  fontSize: 16),
+                            ),
                           ),
                         ),
                       ),

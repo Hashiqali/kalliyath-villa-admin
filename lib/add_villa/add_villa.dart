@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/functions.dart';
-import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/onclick.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_one.dart/drop_down.dart';
@@ -10,13 +9,15 @@ import 'package:kalliyath_villa_admin/add_villa/part_one.dart/part_one.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_one.dart/text_field.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_two.dart/pat_two.dart';
 import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
+import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
 bool acistrue = false;
+List editchangeslist = [];
 addvilla(BuildContext context, Size size, Map<String, dynamic> details,
-    bool istrue) {
+    bool istrue) async {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
   AddvillaBloc villa = AddvillaBloc();
-  villa.add(AdvillaInitial());
+
   if (villaCategories.isEmpty) {
     return checkCategory(context, size);
   } else {
@@ -27,12 +28,14 @@ addvilla(BuildContext context, Size size, Map<String, dynamic> details,
       villaBhkcontroller.text = details['bhk'];
       selectedVilla = details['type'];
       location = details['location'];
-      acistrue = details['ac'];
+      type = details['type'];
+      editchangeslist = details['images'];
       acbloc.add(AcCheckboxcCick(istrue: details['ac']));
       villa.add(Locationbuilder());
-      villa.add(Photobuilder());
+      photo.add(Photobuilderedit());
     } else {
-      villa.add(Photobuilder());
+      villa.add(AdvillaInitial(istrue: false));
+      photo.add(Photobuilder());
     }
   }
 
@@ -74,8 +77,10 @@ addvilla(BuildContext context, Size size, Map<String, dynamic> details,
                           edit: istrue,
                         ),
                         PartTwo(
+                          details: details,
                           size: size,
                           villa: villa,
+                          edit: istrue,
                         )
                       ],
                     ),
@@ -89,7 +94,12 @@ addvilla(BuildContext context, Size size, Map<String, dynamic> details,
                       splashColor: const Color.fromARGB(52, 97, 93, 93),
                       onTap: () {
                         Navigator.of(context).pop();
-                        firebaseimagedelete(imagesListupload);
+                        if (!istrue) {
+                          detailsbloc.add(Detailsbuilder(istrue: false));
+                        } else {
+                          detailsbloc.add(Detailsbuilder(istrue: true));
+                        }
+
                         clearall();
                       },
                       child: Container(
@@ -113,8 +123,13 @@ addvilla(BuildContext context, Size size, Map<String, dynamic> details,
                   color: const Color.fromARGB(255, 12, 38, 77),
                   child: InkWell(
                       splashColor: const Color.fromARGB(52, 97, 93, 93),
-                      onTap: () async {
-                        formsubmit(formkey, context, villa);
+                      onTap: () {
+                        formsubmit(
+                            key: formkey,
+                            villa: villa,
+                            edit: istrue,
+                            context: context,
+                            details: details);
                       },
                       child: Container(
                           decoration: BoxDecoration(

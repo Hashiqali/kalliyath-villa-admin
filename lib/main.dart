@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
+import 'package:kalliyath_villa_admin/login_page/login_page.dart';
 import 'package:kalliyath_villa_admin/main_page/main_page.dart';
 
 void main() async {
@@ -27,8 +28,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),
-    );
+        debugShowCheckedModeBanner: false, home: MainPage());
   }
 }

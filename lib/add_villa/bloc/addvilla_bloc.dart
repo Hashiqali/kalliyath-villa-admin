@@ -18,20 +18,25 @@ class AddvillaBloc extends Bloc<AddvillaEvent, AddvillaState> {
     on<Locationbuilder>(locationbuilder);
     on<Statusbuilder>(statusbuilder);
     on<Detailsbuilder>(detailsbuilder);
+    on<Photobuilderedit>(photobuilderedit);
   }
 
   FutureOr<void> acCheckboxcCick(
       AcCheckboxcCick event, Emitter<AddvillaState> emit) {
     if (state is AcCheckboxcCickstate) {
-      emit(AcCheckboxcCickedstate(istrue: event.istrue));
+      emit(AcCheckboxcCickedstate(istrue: true));
     } else {
-      emit(AcCheckboxcCickstate(istrue: event.istrue));
+      emit(AcCheckboxcCickstate(istrue: false));
     }
   }
 
   FutureOr<void> advillaInitial(
       AdvillaInitial event, Emitter<AddvillaState> emit) {
-    emit(AcCheckboxcCickstate(istrue: false));
+    if (event.istrue == true) {
+      emit(AcCheckboxcCickedstate(istrue: event.istrue));
+    } else {
+      emit(AcCheckboxcCickstate(istrue: event.istrue));
+    }
   }
 
   FutureOr<void> photobuilder(Photobuilder event, Emitter<AddvillaState> emit) {
@@ -66,10 +71,19 @@ class AddvillaBloc extends Bloc<AddvillaEvent, AddvillaState> {
 
   FutureOr<void> detailsbuilder(
       Detailsbuilder event, Emitter<AddvillaState> emit) async {
-    emit(DetailsloadingState());
+    if (event.istrue) {
+      emit(DetailsloadingState());
 
-    await getvillas();
-    await Future.delayed(const Duration(seconds: 3));
-    emit(DetailsbuilderState());
+      await getvillas();
+      await Future.delayed(const Duration(seconds: 1));
+      emit(DetailsbuilderState());
+    } else {
+      emit(DetailsbuilderState());
+    }
+  }
+
+  FutureOr<void> photobuilderedit(
+      Photobuilderedit event, Emitter<AddvillaState> emit) {
+    emit(Photobuildereditstate());
   }
 }

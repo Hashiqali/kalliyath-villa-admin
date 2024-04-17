@@ -13,7 +13,7 @@ class VillasPage extends StatefulWidget {
 class _VillasPageState extends State<VillasPage> {
   @override
   void initState() {
-    detailsbloc.add(Detailsbuilder());
+    
     super.initState();
   }
 

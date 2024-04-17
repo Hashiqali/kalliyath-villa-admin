@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_one.dart/text_field.dart';
 
@@ -17,18 +19,27 @@ bool playground = false;
 bool spa = false;
 bool fitness = false;
 
-// Future<List<String>> imagecontroller(List values) async {
-//   List<String> result = [];
-//   for (var i in values) {
-//     String imageurl = await addimageTofirebase(i);
-//     result.add(imageurl);
-//   }
-//   return result;
-// }
+Future<List> imagecontroller(List values) async {
+  List result = [];
+  for (Uint8List i in values) {
+    String imageurl = await addimageTofirebase(i);
+    result.add(imageurl);
+  }
+  return result;
+}
 
-Future<Map<String, dynamic>> getallvillasdetails() async {
-  // List<String> img = [];
-  // img = await imagecontroller(imagesList);
+List img = [];
+Future<Map<String, dynamic>> getallvillasdetails(
+    {List? imagesindatabase, required bool istrue, String? id}) async {
+  if (istrue == true && imagesindatabase!.isNotEmpty) {
+    final image2 = await imagecontroller(imagesupdate);
+    image2.addAll(editchangeslist);
+    image2.sort();
+    img = image2;
+  } else {
+    img = await imagecontroller(imagesList);
+  }
+
   final data = {
     'name': villaname,
     'description': description,
@@ -46,7 +57,7 @@ Future<Map<String, dynamic>> getallvillasdetails() async {
     'playground': playground,
     'spa': spa,
     'fitness': fitness,
-    'images': imagesListupload
+    'images': img
   };
   return data;
 }

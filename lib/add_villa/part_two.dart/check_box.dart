@@ -4,7 +4,7 @@ import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
 import 'package:kalliyath_villa_admin/widgets/checkbox_widget.dart';
 
-checkBox() {
+checkBox({Map<String, dynamic>? details}) {
   AddvillaBloc blc = AddvillaBloc();
   AddvillaBloc blc1 = AddvillaBloc();
   AddvillaBloc blc2 = AddvillaBloc();
@@ -12,13 +12,18 @@ checkBox() {
   AddvillaBloc blc4 = AddvillaBloc();
   AddvillaBloc blc5 = AddvillaBloc();
   AddvillaBloc blc6 = AddvillaBloc();
-  blc.add(AdvillaInitial());
-  blc1.add(AdvillaInitial());
-  blc2.add(AdvillaInitial());
-  blc3.add(AdvillaInitial());
-  blc4.add(AdvillaInitial());
-  blc5.add(AdvillaInitial());
-  blc6.add(AdvillaInitial());
+  blc.add(
+      AdvillaInitial(istrue: details!.isNotEmpty ? details['wifi'] : false));
+  blc1.add(
+      AdvillaInitial(istrue: details.isNotEmpty ? details['parking'] : false));
+  blc2.add(AdvillaInitial(istrue: details.isNotEmpty ? details['tv'] : false));
+  blc3.add(AdvillaInitial(
+      istrue: details.isNotEmpty ? details['swimmingpool'] : false));
+  blc4.add(AdvillaInitial(
+      istrue: details.isNotEmpty ? details['playground'] : false));
+  blc5.add(AdvillaInitial(istrue: details.isNotEmpty ? details['spa'] : false));
+  blc6.add(
+      AdvillaInitial(istrue: details.isNotEmpty ? details['fitness'] : false));
   return Expanded(
     child: ListView(
       children: [
@@ -27,15 +32,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   wifi = value;
-                  blc.add(AcCheckboxcCick(istrue: false));
+                  blc.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Wifi');
           },
@@ -45,15 +50,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   parking = value;
-                  blc1.add(AcCheckboxcCick(istrue: false));
+                  blc1.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Parking');
           },
@@ -63,15 +68,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   tv = value;
-                  blc2.add(AcCheckboxcCick(istrue: false));
+                  blc2.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Tv');
           },
@@ -81,15 +86,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   swimmingpool = value;
-                  blc3.add(AcCheckboxcCick(istrue: false));
+                  blc3.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Swimming Pool');
           },
@@ -99,15 +104,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   playground = value;
-                  blc4.add(AcCheckboxcCick(istrue: false));
+                  blc4.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Play Ground');
           },
@@ -117,15 +122,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   spa = value;
-                  blc5.add(AcCheckboxcCick(istrue: false));
+                  blc5.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Spa fecilities');
           },
@@ -135,15 +140,15 @@ checkBox() {
           builder: (context, state) {
             bool istrue = false;
             if (state is AcCheckboxcCickedstate) {
-              istrue = true;
+              istrue = state.istrue;
             } else if (state is AcCheckboxcCickstate) {
-              istrue = false;
+              istrue = state.istrue;
             }
             return CheckBoxWidget(
                 istrue: istrue,
                 ontap: (bool value) {
                   fitness = value;
-                  blc6.add(AcCheckboxcCick(istrue: false));
+                  blc6.add(AcCheckboxcCick(istrue: istrue));
                 },
                 text: 'Fitness Center');
           },

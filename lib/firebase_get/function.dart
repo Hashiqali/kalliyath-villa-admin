@@ -18,5 +18,6 @@ Future<List<Map<String, dynamic>>> getFirebaseDetails(String collection) async {
       }
     }
   }
+
   return dataList;
 }

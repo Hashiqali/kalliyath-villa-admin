@@ -29,7 +29,7 @@ aletdilagueDelete(
           actions: [
             TextButton(
                 onPressed: () async {
-                  detailsbloc.add(Detailsbuilder());
+                  detailsbloc.add(Detailsbuilder(istrue: true));
                   Navigator.pop(context);
                   await firebase.doc(details['id']).delete();
                   await firebaseimagedelete(details['images']);

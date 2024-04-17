@@ -9,112 +9,117 @@ GlobalKey<FormState> _categorykey = GlobalKey<FormState>();
 final CollectionReference _category =
     FirebaseFirestore.instance.collection('Categories');
 MainPageBloc blocCategories = MainPageBloc();
-addcategories(
-    {required Size size,
-    required BuildContext context,
-    required bool istrue,
-    String? text,
-    String? id,
-  }) {
+addcategories({
+  required Size size,
+  required BuildContext context,
+  required bool istrue,
+  String? text,
+  String? id,
+}) {
   if (istrue) {
     _categoriescontroller.text = text!;
   }
   showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                istrue ? "Edit Category" : 'Add Category',
-                style: const TextStyle(
-                    fontSize: 20, fontFamily: 'Kalliyath', color: Colors.black),
-              ),
-            ],
-          ),
-          content: SizedBox(
-            width: size.width / 3,
-            height: size.height / 12,
-            child: Form(
-              key: _categorykey,
-              child: TextFormField(
-                controller: _categoriescontroller,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please Enter Category';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                  fillColor: const Color.fromARGB(255, 240, 238, 238),
-                  labelText: 'Category',
-                  labelStyle: const TextStyle(
-                      fontSize: 13,
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: AlertDialog(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  istrue ? "Edit Category" : 'Add Category',
+                  style: const TextStyle(
+                      fontSize: 20,
                       fontFamily: 'Kalliyath',
                       color: Colors.black),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                ),
+              ],
+            ),
+            content: SizedBox(
+              width: size.width / 3,
+              height: size.height / 12,
+              child: Form(
+                key: _categorykey,
+                child: TextFormField(
+                  controller: _categoriescontroller,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Enter Category';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    fillColor: const Color.fromARGB(255, 240, 238, 238),
+                    labelText: 'Category',
+                    labelStyle: const TextStyle(
+                        fontSize: 13,
+                        fontFamily: 'Kalliyath',
+                        color: Colors.black),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
               ),
             ),
+            actions: [
+              Material(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 255, 0, 0),
+                child: InkWell(
+                    splashColor: const Color.fromARGB(52, 97, 93, 93),
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      await Future.delayed(const Duration(milliseconds: 500));
+                      _categoriescontroller.text = '';
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8)),
+                        height: size.height / 20,
+                        width: size.width / 20,
+                        child: const Center(
+                            child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontFamily: "Kalliyath",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        )))),
+              ),
+              Material(
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.circular(10),
+                color: const Color.fromARGB(255, 12, 38, 77),
+                child: InkWell(
+                    splashColor: const Color.fromARGB(52, 97, 93, 93),
+                    onTap: () {
+                      categorysubmit(context, istrue, id);
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8)),
+                        height: size.height / 20,
+                        width: size.width / 20,
+                        child: Center(
+                            child: Text(
+                          istrue ? "Update" : 'Submit',
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              fontFamily: "Kalliyath",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15),
+                        )))),
+              )
+            ],
           ),
-          actions: [
-            Material(
-              clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(255, 255, 0, 0),
-              child: InkWell(
-                  splashColor: const Color.fromARGB(52, 97, 93, 93),
-                  onTap: () async {
-                    Navigator.of(context).pop();
-                    await Future.delayed(const Duration(milliseconds: 500));
-                    _categoriescontroller.text = '';
-                  },
-                  child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                      height: size.height / 20,
-                      width: size.width / 20,
-                      child: const Center(
-                          child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontFamily: "Kalliyath",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
-                      )))),
-            ),
-            Material(
-              clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(255, 12, 38, 77),
-              child: InkWell(
-                  splashColor: const Color.fromARGB(52, 97, 93, 93),
-                  onTap: () {
-                    categorysubmit(context, istrue, id);
-                  },
-                  child: Container(
-                      decoration:
-                          BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                      height: size.height / 20,
-                      width: size.width / 20,
-                      child: Center(
-                          child: Text(
-                        istrue ? "Update" : 'Submit',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontFamily: "Kalliyath",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
-                      )))),
-            )
-          ],
         );
       });
 }

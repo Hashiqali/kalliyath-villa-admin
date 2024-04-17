@@ -1,21 +1,28 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/part_two.dart/check_box.dart';
+import 'package:kalliyath_villa_admin/add_villa/part_two.dart/imagebuilder_tile.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
+final AddvillaBloc photo = AddvillaBloc();
+
 class PartTwo extends StatelessWidget {
-  PartTwo({
+  const PartTwo({
     super.key,
     required this.size,
     required this.villa,
+    required this.details,
+    required this.edit,
   });
+  final bool edit;
   final Size size;
   final AddvillaBloc villa;
-
-  final AddvillaBloc photo = AddvillaBloc();
-
+  final Map<String, dynamic> details;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -36,7 +43,7 @@ class PartTwo extends StatelessWidget {
                 fontSize: 17,
               ),
             ),
-            checkBox(),
+            checkBox(details: details),
             SizedBox(height: size.height / 40),
             Material(
               elevation: 2,
@@ -56,7 +63,7 @@ class PartTwo extends StatelessWidget {
                       splashColor: const Color.fromARGB(52, 111, 111, 111),
                       onTap: () async {
                         if (!istrue) {
-                          filepicker(photo, context);
+                          filepicker(photo, context, edit);
                         }
                       },
                       child: Container(
@@ -114,7 +121,28 @@ class PartTwo extends StatelessWidget {
               child: BlocBuilder<AddvillaBloc, AddvillaState>(
                 bloc: photo,
                 builder: (context, state) {
-                  if (state is Photobuilderstate) {
+                  if (state is Photobuildereditstate) {
+                    return GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.1,
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30,
+                      ),
+                      itemCount: editchangeslist.length + imagesupdate.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (index < editchangeslist.length) {
+                          final String editdata = editchangeslist[index];
+                          return buildImageContainer(editdata, true);
+                        } else {
+                          final Uint8List editdata1 =
+                              imagesupdate[index - editchangeslist.length];
+                          return buildImageContainer(editdata1, true);
+                        }
+                      },
+                    );
+                  } else if (state is Photobuilderstate) {
                     return GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -126,34 +154,7 @@ class PartTwo extends StatelessWidget {
                       itemCount: imagesList.length,
                       itemBuilder: (BuildContext context, int index) {
                         final data = imagesList[index];
-
-                        return Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover, image: MemoryImage(data)),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Center(
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundColor: Colors.white,
-                              child: Center(
-                                child: IconButton(
-                                    onPressed: () async {
-                                      imagesList.removeAt(index);
-                                      await firebaseimagedeletesingle(
-                                          imagesListupload[index]);
-                                      imagesListupload.removeAt(index);
-                                      villa.add(Photobuilder());
-                                    },
-                                    icon: const Icon(
-                                      Icons.close,
-                                      size: 20,
-                                    )),
-                              ),
-                            ),
-                          ),
-                        );
+                        return buildImageContainer(data, false);
                       },
                     );
                   }

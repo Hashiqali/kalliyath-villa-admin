@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
+import 'package:kalliyath_villa_admin/add_villa/part_two.dart/pat_two.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
 List<Uint8List> imagesList = [];
-List imagesListupload = [];
+List<Uint8List> imagesupdate = [];
 
-Future<void> filepicker(AddvillaBloc villa, context) async {
+Future<void> filepicker(AddvillaBloc villa, context, bool istrue) async {
   try {
     final img1 = await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -45,10 +49,14 @@ Future<void> filepicker(AddvillaBloc villa, context) async {
       if (croppedFile != null) {
         final bytes = await croppedFile.readAsBytes();
         detailsbloc.add(Lodingbuilder());
-        imagesList.add(bytes);
-        final data = await addimageTofirebase(bytes);
-        imagesListupload.add(data);
-        villa.add(Photobuilder());
+        if (istrue) {
+          imagesupdate.add(bytes);
+          photo.add(Photobuilderedit());
+        } else {
+          imagesList.add(bytes);
+          photo.add(Photobuilder());
+        }
+
         detailsbloc.add(Lodingbuilder());
       }
     }
@@ -89,5 +97,16 @@ firebaseimagedelete(List paths) async {
 
 firebaseimagedeletesingle(path) async {
   final reference = FirebaseStorage.instance.ref().child(path);
+
   await reference.delete();
+}
+
+firebaseimagelink(List paths) async {
+  List result = [];
+  for (String i in paths) {
+    final reference = FirebaseStorage.instance.ref().child(i);
+    String link = await reference.getDownloadURL();
+    result.add(link);
+  }
+  return result;
 }
