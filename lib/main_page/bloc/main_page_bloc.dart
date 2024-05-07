@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
+import 'package:kalliyath_villa_admin/firebase/firebase_get.dart';
 import 'package:meta/meta.dart';
 
 part 'main_page_event.dart';

@@ -32,3 +32,9 @@ class Detailsbuilder extends AddvillaEvent {
 
   Detailsbuilder({required this.istrue});
 }
+
+class Villadetailsimageloder extends AddvillaEvent {
+  final bool istrue;
+
+  Villadetailsimageloder({required this.istrue});
+}

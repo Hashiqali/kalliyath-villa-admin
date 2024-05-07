@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
+import 'package:kalliyath_villa_admin/colors/colors.dart';
+import 'package:kalliyath_villa_admin/style/textstyle.dart';
 
 class TableItems extends StatelessWidget {
   const TableItems({super.key, required this.size});
@@ -11,13 +13,15 @@ class TableItems extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 13),
-              child: Text('Villas',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Kalliyath',
-                      fontSize: 25)),
+            Padding(
+              padding: const EdgeInsets.only(top: 13),
+              child: Text(
+                'Villas',
+                style: apptextstyle(
+                  color: AppColors.black,
+                  size: 25,
+                ),
+              ),
             ),
             Material(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -32,18 +36,16 @@ class TableItems extends StatelessWidget {
                   height: size.height / 15,
                   width: size.width / 10,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(244, 7, 22, 45),
+                    color: AppColors.blueweb,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       'Add Villa',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Kalliyath",
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: apptextstyle(
+                          color: AppColors.white,
+                          size: 15,
+                          weight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -58,7 +60,7 @@ class TableItems extends StatelessWidget {
           height: size.height / 10,
           width: size.width / 1.2,
           decoration: BoxDecoration(
-              color: const Color.fromARGB(244, 7, 22, 45),
+              color: AppColors.blueweb,
               borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -72,39 +74,37 @@ class TableItems extends StatelessWidget {
                       SizedBox(
                         height: size.height / 15,
                         width: size.width / 25,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'Image',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
+                            style: apptextstyle(
+                              color: AppColors.white,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
                         height: size.height / 15,
                         width: size.width / 20,
-                        child: const Center(
-                          child: Text(
-                            'Name',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
-                          ),
+                        child: Center(
+                          child: Text('Name',
+                              style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                              )),
                         ),
                       ),
                       SizedBox(
                         height: size.height / 15,
                         width: size.width / 9,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'Type',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
+                            style: apptextstyle(
+                              color: AppColors.white,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ),
@@ -113,13 +113,13 @@ class TableItems extends StatelessWidget {
                         child: SizedBox(
                           height: size.height / 15,
                           width: size.width / 40,
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Price',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontFamily: "Kalliyath",
-                                  fontSize: 16),
+                              style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                              ),
                             ),
                           ),
                         ),
@@ -129,13 +129,13 @@ class TableItems extends StatelessWidget {
                         child: SizedBox(
                           height: size.height / 20,
                           width: size.width / 20,
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'Details',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  fontFamily: "Kalliyath",
-                                  fontSize: 16),
+                              style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                              ),
                             ),
                           ),
                         ),
@@ -143,40 +143,36 @@ class TableItems extends StatelessWidget {
                       SizedBox(
                         height: size.height / 15,
                         width: size.width / 12,
-                        child: const Center(
-                          child: Text(
-                            'Status',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
-                          ),
+                        child: Center(
+                          child: Text('Status',
+                              style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                              )),
                         ),
                       ),
                       SizedBox(
                         height: size.height / 20,
                         width: size.width / 20,
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'Edit',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
+                            style: apptextstyle(
+                              color: AppColors.white,
+                              size: 16,
+                            ),
                           ),
                         ),
                       ),
                       SizedBox(
                         height: size.height / 20,
                         width: size.width / 20,
-                        child: const Center(
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 255, 255),
-                                fontFamily: "Kalliyath",
-                                fontSize: 16),
-                          ),
+                        child: Center(
+                          child: Text('Delete',
+                              style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                              )),
                         ),
                       ),
                     ],

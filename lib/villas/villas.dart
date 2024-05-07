@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
+import 'package:kalliyath_villa_admin/colors/colors.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_headings.dart';
 
@@ -13,7 +14,7 @@ class VillasPage extends StatefulWidget {
 class _VillasPageState extends State<VillasPage> {
   @override
   void initState() {
-    
+    detailsimage.add(Villadetailsimageloder(istrue: true));
     super.initState();
   }
 
@@ -22,7 +23,7 @@ class _VillasPageState extends State<VillasPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
-        color: Colors.white,
+        color: AppColors.white,
         height: size.height,
         width: size.width,
         child: Padding(

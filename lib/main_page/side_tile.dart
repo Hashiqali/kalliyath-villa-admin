@@ -3,22 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/bookings/bookings.dart';
 import 'package:kalliyath_villa_admin/categories/categories.dart';
+import 'package:kalliyath_villa_admin/colors/colors.dart';
 import 'package:kalliyath_villa_admin/dash_board/dash_board.dart';
 import 'package:kalliyath_villa_admin/login_page/login_page.dart';
 import 'package:kalliyath_villa_admin/main_page/bloc/main_page_bloc.dart';
+import 'package:kalliyath_villa_admin/messages/messages.dart';
 import 'package:kalliyath_villa_admin/revenue/revenue.dart';
+import 'package:kalliyath_villa_admin/style/textstyle.dart';
 import 'package:kalliyath_villa_admin/users/user.dart';
 import 'package:kalliyath_villa_admin/villas/villas.dart';
-import 'package:kalliyath_villa_admin/widgets/sidebar.dart';
+import 'package:kalliyath_villa_admin/widgets/sidebar_widget/sidebar.dart';
 
 int indexx = 0;
 int currentidx = 0;
 
-// ignore: must_be_immutable
 class SideTile extends StatelessWidget {
-  SideTile({super.key, required this.size});
+  const SideTile({super.key, required this.size});
 
-  Size size;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +69,12 @@ class SideTile extends StatelessWidget {
                                             builder: (ctx) => LoginPage()),
                                         (route) => false);
                                   },
-                                  child: const Text(
+                                  child: Text(
                                     'Logout',
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontFamily: 'Kaliiyath',
-                                        fontSize: 15),
+                                    style: apptextstyle(
+                                      color: AppColors.red,
+                                      size: 15,
+                                    ),
                                   )),
                             )
                           ],
@@ -88,6 +90,7 @@ class SideTile extends StatelessWidget {
                             const UserPage(),
                             const RevenuePage(),
                             Categoriespage(),
+                            const MessagesPage()
                           ],
                         ))
                   ],
@@ -101,14 +104,10 @@ class SideTile extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: const Color(0xFF07162D),
               centerTitle: true,
-              title: const Text(
+              title: Text(
                 'KALLIYATH VILLA',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontFamily: 'Kalliyath',
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: apptextstyle(
+                    color: AppColors.white, size: 25, weight: FontWeight.w600),
               ),
             ),
             navigationTypeResolver: (context) {
@@ -127,7 +126,7 @@ class SideTile extends StatelessWidget {
               indexx = index;
               sidebarindex.add(Indexchange());
             },
-            extendedRailNavigationOverflow: 6,
+            extendedRailNavigationOverflow: 7,
             child: IndexedStack(
               index: indexx,
               children: [
@@ -137,6 +136,7 @@ class SideTile extends StatelessWidget {
                 const UserPage(),
                 const RevenuePage(),
                 Categoriespage(),
+                const MessagesPage()
               ],
             ),
           );

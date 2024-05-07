@@ -4,10 +4,10 @@ import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
 import 'package:kalliyath_villa_admin/add_villa/image_save/imagesave_functions.dart';
 import 'package:kalliyath_villa_admin/add_villa/onclick_function/controller.dart';
-import 'package:kalliyath_villa_admin/add_villa/part_one.dart/text_field.dart';
-import 'package:kalliyath_villa_admin/firebase_get/firebase_get.dart';
+import 'package:kalliyath_villa_admin/add_villa/dialogue_fields.dart/text_field.dart';
+import 'package:kalliyath_villa_admin/firebase/firebase_get.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
-import 'package:kalliyath_villa_admin/widgets/snackbar.dart';
+import 'package:kalliyath_villa_admin/widgets/snackbar_widget/snackbar.dart';
 
 final CollectionReference firedata =
     FirebaseFirestore.instance.collection('VillaDetails');
@@ -31,6 +31,7 @@ add(GlobalKey<FormState> key, context, AddvillaBloc villa,
   description = villaDescriptioncontroller.text.trim();
   price = villaPricecontroller.text.trim();
   bhk = villaBhkcontroller.text.trim();
+  perperson = villaperpersoncontroller.text.trim();
 
   bool istrue = villaDetails
       .any((element) => element['name'] == villaNamecontroller.text.trim());
@@ -41,7 +42,7 @@ add(GlobalKey<FormState> key, context, AddvillaBloc villa,
     } else if (type == '') {
       snackbarAlert(context, 'Please select villa type');
       return;
-    } else if (location == '') {
+    } else if (location.isEmpty) {
       snackbarAlert(context, 'Please add location');
     } else if (imagesList.isEmpty) {
       snackbarAlert(context, 'Please add images');
@@ -54,6 +55,7 @@ add(GlobalKey<FormState> key, context, AddvillaBloc villa,
 
       villa.add(Lodingbuilder());
       detailsbloc.add(Detailsbuilder(istrue: true));
+      detailsimage.add(Villadetailsimageloder(istrue: true));
       Navigator.of(context).pop();
 
       await snackbarAlert(context, 'Success');
@@ -81,7 +83,7 @@ update(GlobalKey<FormState> key, context, AddvillaBloc villa,
     } else if (type == '') {
       snackbarAlert(context, 'Please select villa type');
       return;
-    } else if (location == '') {
+    } else if (location.isEmpty) {
       snackbarAlert(context, 'Please add location');
     } else if (editchangeslist.isEmpty && imagesupdate.isEmpty) {
       snackbarAlert(context, 'Please add images');
@@ -109,9 +111,10 @@ clearall() {
   villaDescriptioncontroller.text = '';
   villaBhkcontroller.text = '';
   villaPricecontroller.text = '';
+  villaperpersoncontroller.text = '';
   villaname = '';
   description = '';
-  location = '';
+  location.clear();
   type = '';
   ac = false;
   price = '';

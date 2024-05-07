@@ -6,9 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kalliyath_villa_admin/add_villa/add_villa.dart';
 import 'package:kalliyath_villa_admin/add_villa/bloc/addvilla_bloc.dart';
-import 'package:kalliyath_villa_admin/add_villa/part_two.dart/pat_two.dart';
+import 'package:kalliyath_villa_admin/add_villa/dialogue_fields.dart/addvilla_Imagepicker.dart';
 import 'package:kalliyath_villa_admin/villas/table/table_datas.dart';
 
 List<Uint8List> imagesList = [];
@@ -78,12 +77,12 @@ Future<String> addimageTofirebase(Uint8List? result) async {
       final metadata = SettableMetadata(contentType: 'image/jpeg');
       await referenceFileToUpload.putData(bytes, metadata);
       imageUrl = await referenceFileToUpload.getDownloadURL();
-      print('File uploaded successfully. Download URL: $imageUrl');
+     
     } catch (error) {
-      print('Error uploading file: $error');
+      log('Error uploading file: $error');
     }
   } else {
-    print('No image data provided.');
+    
   }
   return imageUrl;
 }
