@@ -6,6 +6,7 @@ import 'package:kalliyath_villa_admin/categories/categories.dart';
 import 'package:kalliyath_villa_admin/colors/colors.dart';
 import 'package:kalliyath_villa_admin/dash_board/dash_board.dart';
 import 'package:kalliyath_villa_admin/login_page/login_page.dart';
+import 'package:kalliyath_villa_admin/main_page/alert_dialogue.dart';
 import 'package:kalliyath_villa_admin/main_page/bloc/main_page_bloc.dart';
 import 'package:kalliyath_villa_admin/messages/messages.dart';
 import 'package:kalliyath_villa_admin/revenue/revenue.dart';
@@ -13,6 +14,7 @@ import 'package:kalliyath_villa_admin/style/textstyle.dart';
 import 'package:kalliyath_villa_admin/users/user.dart';
 import 'package:kalliyath_villa_admin/villas/villas.dart';
 import 'package:kalliyath_villa_admin/widgets/sidebar_widget/sidebar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 int indexx = 0;
 int currentidx = 0;
@@ -63,11 +65,8 @@ class SideTile extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 10),
                               child: TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (ctx) => LoginPage()),
-                                        (route) => false);
+                                  onPressed: () async {
+                                    showSignOutDialog(context);
                                   },
                                   child: Text(
                                     'Logout',
@@ -107,7 +106,7 @@ class SideTile extends StatelessWidget {
               title: Text(
                 'KALLIYATH VILLA',
                 style: apptextstyle(
-                    color: AppColors.white, size: 25, weight: FontWeight.w600),
+                    color: AppColors.white, size: 25, weight: FontWeight.w400),
               ),
             ),
             navigationTypeResolver: (context) {

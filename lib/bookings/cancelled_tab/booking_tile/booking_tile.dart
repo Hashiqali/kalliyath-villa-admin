@@ -43,8 +43,13 @@ cancelledbookingTile({required Size size}) {
                   } else {
                     final bookings = snapshot.data ?? [];
                     final cancelled = getcancelled(bookings);
-                    final reversed = cancelled.reversed.toList();
-                    return reversed.isEmpty
+                    cancelled.sort((a, b) {
+                      DateTime dateA = DateTime.parse(a['villa']['checkout']);
+                      DateTime dateB = DateTime.parse(b['villa']['checkout']);
+                      return dateB.compareTo(dateA); // For descending order
+                    });
+
+                    return cancelled.isEmpty
                         ? Center(
                             child: Text(
                               'No Bookings',
@@ -53,9 +58,9 @@ cancelledbookingTile({required Size size}) {
                             ),
                           )
                         : ListView.builder(
-                            itemCount: reversed.length,
+                            itemCount: cancelled.length,
                             itemBuilder: (ctx, index) {
-                              final data = reversed[index];
+                              final data = cancelled[index];
 
                               return cancelledbookingDatasTile(
                                   size: size,

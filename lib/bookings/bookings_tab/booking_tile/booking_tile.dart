@@ -42,17 +42,22 @@ bookingTile({required Size size}) {
                   } else {
                     final bookings = snapshot.data ?? [];
                     final booked = getbooked(bookings);
-                    final reversed = booked.reversed.toList();
-                    return reversed.isEmpty
+                    booked.sort((a, b) {
+                      DateTime dateA = DateTime.parse(a['villa']['checkout']);
+                      DateTime dateB = DateTime.parse(b['villa']['checkout']);
+                      return dateB.compareTo(dateA); // For descending order
+                    });
+
+                    return booked.isEmpty
                         ? Center(
                             child: Text('No Bookings',
                                 style: apptextstyle(
                                     color: AppColors.black, size: 16)),
                           )
                         : ListView.builder(
-                            itemCount: reversed.length,
+                            itemCount: booked.length,
                             itemBuilder: (ctx, index) {
-                              final data = reversed[index];
+                              final data = booked[index];
 
                               return bookingDatasTile(
                                   size: size,

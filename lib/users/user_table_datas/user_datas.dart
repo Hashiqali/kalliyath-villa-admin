@@ -7,7 +7,7 @@ import 'package:kalliyath_villa_admin/users/bloc/user_bloc.dart';
 
 userTableDatasTile(
     {required Size size,
-    required String image,
+    required String? image,
     required String name,
     required String orderid,
     required BuildContext context,
@@ -33,22 +33,27 @@ userTableDatasTile(
                   ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: SizedBox(
-                      height: size.height / 15,
-                      width: size.width / 25,
-                      child: Image(
-                          fit: BoxFit.cover,
-                          filterQuality: FilterQuality.high,
-                          image: NetworkImage(image)),
-                    ),
+                        height: size.height / 15,
+                        width: size.width / 25,
+                        child: Image(
+                            fit:
+                                image != null ? BoxFit.cover : BoxFit.fitHeight,
+                            filterQuality: FilterQuality.high,
+                            image: image != null
+                                ? NetworkImage(image)
+                                : const AssetImage(
+                                        'assets/images/profile-user.png')
+                                    as ImageProvider)),
                   ),
                   SizedBox(
                     height: size.height / 15,
-                    width: size.width / 11,
+                    width: size.width / 9,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
+                          overflow: TextOverflow.ellipsis,
                           name,
                           style: apptextstyle(
                             color: AppColors.black,
@@ -68,7 +73,7 @@ userTableDatasTile(
                           color: const Color.fromARGB(251, 181, 218, 237),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          padding: const EdgeInsets.only(right: 10),
                           child: Text(
                             orderid,
                             style: apptextstyle(

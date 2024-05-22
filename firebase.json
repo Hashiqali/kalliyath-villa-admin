@@ -1,0 +1,10 @@
+{
+  "hosting": {"site": "kalliyathvilla-3080",
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

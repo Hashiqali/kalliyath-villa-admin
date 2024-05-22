@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa_admin/colors/colors.dart';
+import 'package:kalliyath_villa_admin/login_page/bloc/login_bloc.dart';
 import 'package:kalliyath_villa_admin/login_page/functions.dart';
 import 'package:kalliyath_villa_admin/style/textstyle.dart';
 
@@ -8,6 +10,7 @@ loginTile(
     required TextEditingController usercontroller,
     required TextEditingController passcontroller,
     required Size size}) {
+  LoginBloc loginbloc = LoginBloc();
   return Center(
     child: LayoutBuilder(
       builder: (context, constraints) {
@@ -105,6 +108,7 @@ loginTile(
                             return null;
                           },
                           keyboardType: TextInputType.number,
+                          obscureText: true,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: AppColors.white,
@@ -120,38 +124,52 @@ loginTile(
                         SizedBox(
                           height: height / 30,
                         ),
-                        Material(
-                          clipBehavior: Clip.hardEdge,
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.transparent,
-                          child: InkWell(
-                            splashColor:
-                                const Color.fromARGB(121, 129, 128, 128),
-                            onTap: () {
-                              login(
-                                  context,
-                                  adminkey,
-                                  usercontroller.text.trim(),
-                                  passcontroller.text.trim());
-                            },
-                            child: Container(
-                              height: size.height / 15,
-                              width: size.width,
-                              decoration: BoxDecoration(
-                                color: AppColors.lightgreen,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Login',
-                                  style: apptextstyle(
-                                      color: AppColors.white,
-                                      size: 17,
-                                      weight: FontWeight.w400),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          bloc: loginbloc,
+                          builder: (context, state) {
+                            bool loading = false;
+                            if (state is LoadingEventstate) {
+                              loading = state.istrue;
+                            }
+                            return Material(
+                              clipBehavior: Clip.hardEdge,
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.transparent,
+                              child: InkWell(
+                                splashColor:
+                                    const Color.fromARGB(121, 129, 128, 128),
+                                onTap: () {
+                                  login(
+                                      context,
+                                      adminkey,
+                                      usercontroller.text.trim(),
+                                      passcontroller.text.trim(),
+                                      loginbloc);
+                                },
+                                child: Container(
+                                  height: size.height / 15,
+                                  width: size.width,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.lightgreen,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: loading
+                                        ? const CircularProgressIndicator(
+                                            color: AppColors.white,
+                                          )
+                                        : Text(
+                                            'Login',
+                                            style: apptextstyle(
+                                                color: AppColors.white,
+                                                size: 17,
+                                                weight: FontWeight.w400),
+                                          ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         )
                       ],
                     ),
