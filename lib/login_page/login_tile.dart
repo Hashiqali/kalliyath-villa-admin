@@ -18,22 +18,22 @@ loginTile(
         final double height = constraints.maxHeight;
 
         double maxWidthFactor = width / 3;
-        double maxHeightFactor = height / 1.8;
+        double maxHeightFactor = height / 1.5;
         if (width < 430) {
           maxWidthFactor = width - 20;
-          maxHeightFactor = height / 3;
+          maxHeightFactor = height / 1.5;
         } else if (width < 600) {
           maxWidthFactor = width - 200;
-          maxHeightFactor = height / 2.5;
+          maxHeightFactor = height / 1.5;
         } else if (width < 915) {
           maxWidthFactor = width / 1.6;
-          maxHeightFactor = height / 2.3;
+          maxHeightFactor = height / 1.5;
         } else if (width < 1025) {
           maxWidthFactor = width / 1.7;
-          maxHeightFactor = height / 2.5;
+          maxHeightFactor = height / 1.5;
         } else if (width < 1290) {
           maxWidthFactor = width / 2.5;
-          maxHeightFactor = height / 2;
+          maxHeightFactor = height / 1.5;
         }
         return ConstrainedBox(
           constraints: BoxConstraints(
@@ -119,6 +119,39 @@ loginTile(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
+                          ),
+                        ),
+                        Center(
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Demo Admin',
+                                style: apptextstyle(
+                                  color: AppColors.black,
+                                  size: 15,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                'Usename : admin',
+                                style: apptextstyle(
+                                  color: AppColors.black,
+                                  size: 12,
+                                ),
+                              ),
+                              Text(
+                                'Password : 1234',
+                                style: apptextstyle(
+                                  color: AppColors.black,
+                                  size: 12,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
