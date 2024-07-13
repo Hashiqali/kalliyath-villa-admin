@@ -137,15 +137,15 @@ loginTile(
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                'Usename : admin',
+                              SelectableText(
+                                'Username: admin',
                                 style: apptextstyle(
                                   color: AppColors.black,
                                   size: 12,
                                 ),
                               ),
-                              Text(
-                                'Password : 1234',
+                              SelectableText(
+                                'Password: 1234',
                                 style: apptextstyle(
                                   color: AppColors.black,
                                   size: 12,
