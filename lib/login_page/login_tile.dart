@@ -10,6 +10,8 @@ loginTile(
     required TextEditingController usercontroller,
     required TextEditingController passcontroller,
     required Size size}) {
+  final FocusNode userFocusNode = FocusNode();
+  final FocusNode passFocusNode = FocusNode();
   LoginBloc loginbloc = LoginBloc();
   return Center(
     child: LayoutBuilder(
@@ -74,6 +76,7 @@ loginTile(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextFormField(
+                          focusNode: userFocusNode,
                           controller: usercontroller,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
@@ -82,7 +85,7 @@ loginTile(
                             }
                             return null;
                           },
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: AppColors.white,
@@ -99,6 +102,7 @@ loginTile(
                           height: height / 30,
                         ),
                         TextFormField(
+                          focusNode: passFocusNode,
                           controller: passcontroller,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {
@@ -137,18 +141,24 @@ loginTile(
                               const SizedBox(
                                 height: 5,
                               ),
-                              SelectableText(
-                                'Username: admin',
-                                style: apptextstyle(
-                                  color: AppColors.black,
-                                  size: 12,
+                              GestureDetector(
+                                onTap: () {},
+                                child: SelectableText(
+                                  'Username: admin',
+                                  style: apptextstyle(
+                                    color: AppColors.black,
+                                    size: 12,
+                                  ),
                                 ),
                               ),
-                              SelectableText(
-                                'Password: 1234',
-                                style: apptextstyle(
-                                  color: AppColors.black,
-                                  size: 12,
+                              GestureDetector(
+                                onTap: () {},
+                                child: SelectableText(
+                                  'Password: 1234',
+                                  style: apptextstyle(
+                                    color: AppColors.black,
+                                    size: 12,
+                                  ),
                                 ),
                               ),
                             ],
